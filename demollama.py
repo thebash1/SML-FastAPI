@@ -29,7 +29,7 @@ async def analizer(file: UploadFile = File(...)):
             f"Si no hay datos numéricos, estima la relevancia de los asuntos en porcentajes basándote en su mención. "
             f"Texto: {texto_completo[:4000]}" # Limitamos a 4000 caracteres por el contexto
         ) 
-         response = ollama.chat(model='llama3', messages=[
+         response = ollama.chat(model='llama3.5:1b', messages=[
             {'role': 'system', 'content': 'Eres un asistente analítico que responde con datos y porcentajes.'},
             {'role': 'user', 'content': prompt},
         ])
