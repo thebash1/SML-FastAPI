@@ -19,3 +19,14 @@ Luego de descargar el zip del proyecto, deberá crear un entorno virtual, inicia
 ![directory_cmd](screenshot_directory.PNG)
 
 ## Ejecución de proyecto
+
+Primeramente aclarar que en este ejemplo se esta usando el pdf que esta dentro del proyecto para el analisis y la prediccion de los nuevos casos que se puedan presentar estadisticamente.  
+
+- Ejecute `uvicorn demollama:app --reload` para iniciar la API en un servidor local, su terminal deberá visualizarse de la siguiente manera.  
+
+![screenshot_term1](api_localhost.png)
+
+- No necesita instalar un software que permita realizar peticiones, para este ejercicio puede emplear el sitio web interactivo de FastAPI, ingresando a http://127.0.0.1:8000/docs.  
+
+![screenshot_term2](webapi_ui.png)
+

@@ -1,46 +1,28 @@
-import ollama
-import fitz
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, HTTPException
+from pdfprocessor import extractTextFromPdf, convertToJson
+import json
 
 app = FastAPI()
 
 @app.get("/")
-def read_root():
-	return {"hello":"world"}
+def readRoot():
+    return {"message":"API is running"}
 
-@app.post("/analtic")
-async def analizer(file: UploadFile = File(...)):
-    if not file.filename.endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="El archivo debe ser un pdf")
-
+@app.post("/process-local-pdf")
+async def processPdf(file_name: str):
     try:
-        pdf_content = await file.read()
-        doc = fitz.open(stream=pdf_content, filetype="pdf")
-
-        text_complete = ""
-        for page in doc:
-            text_complete += page.get_text()
-
-        doc.close()
-
-        prompt = (
-            f"Actúa como un analista de datos experto. Basado en el siguiente texto extraído de un PDF, "
-            f"genera un reporte que incluya probabilidades estadísticas o frecuencias sobre los temas principales. "
-            f"Si no hay datos numéricos, estima la relevancia de los asuntos en porcentajes basándote en su mención. "
-            f"Texto: {texto_completo[:4000]}" # Limitamos a 4000 caracteres por el contexto
-        ) 
-         response = ollama.chat(model='llama3.5:1b', messages=[
-            {'role': 'system', 'content': 'Eres un asistente analítico que responde con datos y porcentajes.'},
-            {'role': 'user', 'content': prompt},
-        ])
-
+        raw_text = extractTextFromPdf(file_name)
+        
+        json_string = convertToJson(raw_text, file_name)
+        structured_data = json.loads(json_string)
+        
         return {
-            "archivo": file.filename,
-            "analisis": response['message']['content']
+            "status": "success",
+            "data": structured_data
         }
 
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        return {"error": f"Ocurrió un error al procesar el PDF: {str(e)}"}
-
-# Ejecución: uvicorn nombre_archivo:app --reload 
-
+        raise HTTPException(status_code=500, detail=f"Internal Error: {str(e)}")
+    
