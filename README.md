@@ -16,7 +16,7 @@ Crear entorno virtual `python -m venv venv`, activar el entorno `source .\venv\S
 Para instalar los requirements.txt use `pip install -r requirements.txt`.  
 Todo esto debera hacerlo en una terminal que contenga la ubicación del proyecto, puede usar cmd, powershell o bash, el que mejor domine, así debera ver su terminal.  
 
-![directory_cmd](screenshot_directory.png)  
+![directory_cmd](screenshot_directory.PNG)
 
 ## Ejecución de proyecto
 
