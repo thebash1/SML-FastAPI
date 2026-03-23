@@ -30,3 +30,8 @@ Primeramente aclarar que en este ejemplo se esta usando el pdf que esta dentro d
 
 ![screenshot_term2](webapi_ui.png)
 
+- Para realizar la consulta post o get, debera ingresar el parametro que la api solicite, en este caso es el nombre del documento pdf, junto su extensión (.pdf), como se ve en la siguiente imagen.  
+
+![screenshot_webapi](webapi_query.png)
+
+
